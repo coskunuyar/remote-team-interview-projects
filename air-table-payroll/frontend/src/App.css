@@ -1,0 +1,85 @@
+body{
+  background-color: #fafbfb;
+}
+
+.item-container-flex-box{
+  display:flex;
+  flex-direction: row;
+  margin:0 15% 0 15%;
+}
+
+.item-container-flex-box.reverse{
+  flex-direction: row-reverse;
+}
+
+.item-container{
+  text-align: center;
+  margin:0 15% 0 15%;
+}
+
+@media screen and (max-width: 900px) {
+  .item-container-flex-box{
+    margin:0 5% 0 5%;
+    flex-wrap: wrap;
+    text-align: center;
+  }
+  .item-container{
+    margin:0 5% 0 5%;
+  }
+  .item-container-flex-box .container{
+    width: 100%;
+  }
+}
+
+.container-title{
+  font-family:Montserrat, sans-serif;
+  font-size: 2.2rem;
+  font-weight: 900;
+  font-weight:900;
+  letter-spacing: 1px;
+  color: #323d47;
+}
+
+.container-description{
+  font-family: montserrat,sans-serif;
+  font-size: 1.35rem;
+  font-weight: 400;
+  line-height: 1.9;
+  color: #757575;
+}
+
+.start-now-button{
+  color: white;
+  padding: 15px 32px 15px;
+  letter-spacing: 1px;
+  font-size: 12px;
+  font-weight: 700;
+  border-radius: .2rem;
+  background-color: #50a1ff;
+  border: 1px solid transparent;
+}
+
+.start-now-button:hover{
+  box-shadow: 0 0 12px rgba(0,0,0,.06);
+  cursor: pointer;
+}
+
+.header-container{
+  text-align: center;
+  background-color: #2d46c1 !important;
+  color: white;
+  padding: 100px 200px 100px 200px;
+}
+
+.header-container p{
+  font-size: 3.4rem;
+  font-weight: 900;
+  line-height: 1.2;
+  font-family: Montserrat,sans-serif;
+  margin:0 15% 0 15%;
+}
+
+.discount-motto{
+  font-size: 14px;
+  color: grey;
+}
