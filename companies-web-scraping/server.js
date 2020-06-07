@@ -8,16 +8,13 @@ Airtable.configure({
 });
 const base = Airtable.base('apph5h80dhvflkuI9');
 
-const EMAIL_SELECTOR = '#username';
-const PASSWORD_SELECTOR = '#password';
-const SUBMIT_SELECTOR = '#app__container > main > div > form > div.login__form_action_container > button';
-const PEOPLE_SELECTOR = '.link-without-visited-state.inline-block.ember-view';
-const NEXT_BUTTON = ".artdeco-pagination__button.artdeco-pagination__button--next.artdeco-button.artdeco-button--muted.artdeco-button--icon-right.artdeco-button--1.artdeco-button--tertiary.ember-view";
-const LAST_ITEM = ".artdeco-pagination__pages.artdeco-pagination__pages--number li:last-child span";
-const PERSON_NAME = "h3 .actor-name";
-const PERSON_TITLE = ".subline-level-1.t-14.t-black.t-normal.search-result__truncate";
-const PERSON_LOCATION = ".subline-level-2.t-12.t-black--light.t-normal.search-result__truncate";
-const WAITING_TIME = 6000;
+const people_selector = '.link-without-visited-state.inline-block.ember-view';
+const next_button = ".artdeco-pagination__button.artdeco-pagination__button--next.artdeco-button.artdeco-button--muted.artdeco-button--icon-right.artdeco-button--1.artdeco-button--tertiary.ember-view";
+const last_item = ".artdeco-pagination__pages.artdeco-pagination__pages--number li:last-child span";
+const person_name = "h3 .actor-name";
+const person_title = ".subline-level-1.t-14.t-black.t-normal.search-result__truncate";
+const person_location = ".subline-level-2.t-12.t-black--light.t-normal.search-result__truncate";
+const waiting_time = 4000;
 
 const delay  = (time) =>  new Promise(function(resolve) { setTimeout(resolve, time) });
 
@@ -31,31 +28,21 @@ const savePeople = (people) => {
       });
 }
 
-const findPeopleAndSavePeople = (companyName) => {
+const findAndSavePeople = (companyName) => {
         puppeteer.launch({ headless: true })
             .then(async (browser) => {
                 let page = await browser.newPage();
                 page.setViewport({ width: 1366, height: 2000 });
                 await page.goto(`https://www.linkedin.com/company/${companyName}/about`, { waitUntil: 'domcontentloaded' });
-                await delay(WAITING_TIME);
-
-                await page.click(EMAIL_SELECTOR)
-                await page.keyboard.type('');
-
-                await page.click(PASSWORD_SELECTOR);
-                await page.keyboard.type('');
+                await delay(waiting_time);
                 
-                await page.click(SUBMIT_SELECTOR);
-                await delay(WAITING_TIME);
-                
-                await page.click(PEOPLE_SELECTOR);
-                await delay(WAITING_TIME);
-                await page.screenshot({path: 'page2.png'});
+                await page.click(people_selector);
+                await delay(waiting_time);
 
                 let content = await page.content();
                 let $ = cheerio.load(content);
                 let numberOfPages = 0;
-                if(content) numberOfPages = $(LAST_ITEM).text();
+                if(content) numberOfPages = $(last_item).text();
 
                 let listName = [];
                 let listTitle = [];
@@ -65,18 +52,17 @@ const findPeopleAndSavePeople = (companyName) => {
                     let content = await page.content();
                     if(content){
                         let $ = cheerio.load(content);
-                        $(PERSON_NAME).each((index, element) => {
+                        $(person_name).each((index, element) => {
                             listName.push($(element).text().trim());
                         });
-                        $(PERSON_TITLE).each((index, element) => {
+                        $(person_title).each((index, element) => {
                             listTitle.push($(element).text().trim());
                         });
-                        $(PERSON_LOCATION).each((index, element) => {
+                        $(person_location).each((index, element) => {
                             listLocation.push($(element).text().trim());
                         });
-                        await page.click(NEXT_BUTTON);
-                        await delay(WAITING_TIME);
-                        await page.screenshot({path: 'page2.png'});
+                        await page.click(next_button);
+                        await delay(waiting_time);
                     }else{
                         console.log("There is no content!");
                         process.exit();
@@ -95,7 +81,7 @@ const findPeopleAndSavePeople = (companyName) => {
                 }
                 savePeople(result);
             }).catch((err) => {
-                console.log("Something went wrong!");
+                console.log("Something went wrong!" , err);
                 process.exit();
             });
 };
@@ -106,6 +92,6 @@ base('Companies').select({view: 'Grid view' }).firstPage((err, records) => {
     let result = [];
     records.forEach((record) => result.push(record.fields["Name"]));
     for(let i=0; i<result.length; i++){
-        findPeopleAndSavePeople(result[i]);
+        findAndSavePeople(result[i]);
     }
 });
