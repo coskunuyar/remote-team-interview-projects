@@ -2,6 +2,7 @@ import React from 'react';
 import './App.css';
 import Question from './components/Question';
 import Invalid from './components/Invalid';
+import DownloadPDF from './components/DownloadPDF';
 
 class App extends React.Component {
   constructor(props){
@@ -44,7 +45,7 @@ class App extends React.Component {
           />
           <Question 
               inputType="select" 
-              question="Are you a person or entity?" 
+              question="What is your citizenship status?" 
               bindingPath="usOrNonus"
               data={{ data: ["US","NON US"] , invalidOption: "US"}}
               onNextClick={this.onNextClick}
@@ -86,6 +87,11 @@ class App extends React.Component {
               onNextClick={this.onNextClick}
               questionStep={6}
               nextStep={7}
+              currentStep={this.state.currentStep}
+          />
+          <DownloadPDF
+              data={this.state.formData}
+              questionStep={7}
               currentStep={this.state.currentStep}
           />
         {this.state.currentStep === -9999 && <Invalid />}
