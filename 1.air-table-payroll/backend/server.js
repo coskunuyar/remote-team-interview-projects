@@ -4,9 +4,9 @@ const Airtable = require('airtable');
 
 Airtable.configure({ 
     endpointUrl: 'https://api.airtable.com', 
-    apiKey: 'key9HhMXK5qGlNGsi'
+    apiKey: ''
 });
-const base = Airtable.base('appmeVwoeMWJC8G74');
+const base = Airtable.base('');
 
 const app = express();
 app.use(cors());
