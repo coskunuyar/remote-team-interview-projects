@@ -1,12 +1,12 @@
 const express = require('express');
-const { degrees, PDFDocument, rgb, StandardFonts } = require('pdf-lib');
-const fs = require('fs');
+const path = require('path');
+const cors = require('cors');
 const app = express();
 
+app.use(cors());
+
 app.get("/form",async (req,res) => {
-    fs.readFile('./form.pdf', async function read(err, data) {
-        res.sendFile(data);
-    });
+    res.sendFile(path.join(__dirname, 'form.pdf'));
 });
 
 app.listen(5000,() => {

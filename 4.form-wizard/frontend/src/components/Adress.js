@@ -2,7 +2,7 @@ import React from 'react';
 import PlacesAutocomplete from 'react-places-autocomplete';
 
 export default function Adress(props){
-    const [address,setAddress] = React.useState("İstanbul");
+    const [address,setAddress] = React.useState("Istanbul,Levent 4. Sokak");
    
     React.useEffect(() => {
         props.onChange({target: { value: address } });

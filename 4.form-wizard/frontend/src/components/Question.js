@@ -52,7 +52,7 @@ export default class Qeustion extends React.Component{
                         </div>
                     </div>
                   );
-        }else if(this.props.inputType === "adress"){
+        }else if(this.props.inputType === "address"){
             return(
                 <div className="question-flex-container" style={{ display: isVisible }}>
                     <h1>{this.props.question}</h1>

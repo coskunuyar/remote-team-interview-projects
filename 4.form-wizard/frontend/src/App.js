@@ -14,7 +14,8 @@ class App extends React.Component {
             name: "",
             surname: "",
             organizationName: "",
-            adress: ""
+            organizationCountry: "",
+            address: ""
         },
         currentStep: 1
     }
@@ -81,17 +82,26 @@ class App extends React.Component {
               currentStep={this.state.currentStep}
           />
           <Question 
-              inputType="adress" 
-              question="What is your adress?" 
-              bindingPath="adress"
+              inputType="text" 
+              question="Country of your organization?" 
+              bindingPath="organizationCountry"
               onNextClick={this.onNextClick}
               questionStep={6}
               nextStep={7}
               currentStep={this.state.currentStep}
           />
+          <Question 
+              inputType="address" 
+              question="What is your address?" 
+              bindingPath="address"
+              onNextClick={this.onNextClick}
+              questionStep={7}
+              nextStep={8}
+              currentStep={this.state.currentStep}
+          />
           <DownloadPDF
               data={this.state.formData}
-              questionStep={7}
+              questionStep={8}
               currentStep={this.state.currentStep}
           />
         {this.state.currentStep === -9999 && <Invalid />}
